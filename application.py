@@ -37,7 +37,7 @@ def saveRecord():
             address = request.form["address"]
             sql = ('insert into Student_Info(name, email, gender, contact, dob, address)'
                   'values(:name,:email,:gender,:contact,:dob,:address)')
-            with c.connect("c##scott/tiger@localhost/ORCL21C") as connection:
+            with c.connect("c##scott/tiger@localhost/orcl") as connection:
                 cursor = connection.cursor()
                 print(cursor)
                 cursor.execute(sql,[name,email,gender,contact,dob,address])
@@ -63,11 +63,12 @@ def delete_student():
 
 @app.route("/student_info")
 def student_info():
-    connection = c.connect("c##scott/tiger@localhost/ORCL21C")
+    connection = c.connect("c##scott/tiger@localhost/orcl")
     #connection.row_factory = sqlite3.Row
     cursor = connection.cursor()
     cursor.execute("select * from Student_Info")
     rows = cursor.fetchall()
+    print(type(rows))
     return render_template("student_info.html",rows = rows)
 
 
@@ -75,7 +76,7 @@ def student_info():
 @app.route("/deleterecord",methods = ["POST"])
 def deleterecord():
     id = request.form["id"]
-    with c.connect("c##scott/tiger@localhost/ORCL21C") as connection:
+    with c.connect("c##scott/tiger@localhost/orcl") as connection:
 
         cursor = connection.cursor()
         cursor.execute("select * from Student_Info where id=?", (id,))
