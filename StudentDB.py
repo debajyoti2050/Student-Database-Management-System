@@ -1,5 +1,5 @@
 import cx_Oracle as c
-connection = c.connect("c##scott/tiger@localhost/ORCL21C")
+connection = c.connect("c##scott/tiger@localhost/orcl")
 print("Database opened successfully")
 cursor = connection.cursor()
 #delete
